@@ -1,110 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>For karsihma ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      color: #fff;
-      text-align: center;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .card {
-      background: rgba(0,0,0,0.25);
-      padding: 30px;
-      border-radius: 16px;
-      max-width: 400px;
-      width: 90%;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    button {
-      display: block;
-      width: 100%;
-      margin: 12px 0;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #ff4d6d;
-      color: white;
-    }
-    button.secondary {
-      background: #ff8fa3;
-    }
-    .hidden {
-      display: none;
-    }
-    .final {
-      font-size: 22px;
-      line-height: 1.4;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Happy Rose Day Shalini 🌹</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.card {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 35px;
+  width: 380px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+h1 {
+  color: #9b003f;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #4a0026;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+input {
+  margin-top: 15px;
+  padding: 10px;
+  width: 80%;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 22px;
+  border-radius: 25px;
+  border: none;
+  background: #9b003f;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #7a0032;
+}
+
+.hidden {
+  display: none;
+}
+
+.rose {
+  position: absolute;
+  font-size: 24px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh) rotate(0deg); }
+  to { transform: translateY(-10vh) rotate(360deg); }
+}
+
+.typing {
+  border-right: 2px solid #7a0032;
+  display: inline;
+  padding-right: 4px;
+}
+</style>
 </head>
 
 <body>
-  <div class="card">
 
-    <!-- STEP 1 -->
-    <div id="step1">
-      <h1>karsihma,will you be my girlfriend this Valentine? ❤️</h1>
-      <button onclick="nextStep('step2')">Yes 💕</button>
-      <button class="secondary" onclick="alert('Take your time ❤️')">Let me think 😊</button>
-    </div>
+<div class="card" id="lockScreen">
+  <h1>🌹 For Shalini 🌹</h1>
+  <p>
+    This page opens only for one person.  
+    The one whose name makes everything softer.
+  </p>
+  <input type="text" id="password" placeholder="Enter your name">
+  <br>
+  <button onclick="unlock()">Unlock 💌</button>
+</div>
 
-    <!-- STEP 2 -->
-    <div id="step2" class="hidden">
-      <h1>Where should we plan our date? 🌹</h1>
-      <button onclick="nextStep('step3')">Candle light dinner 🕯️</button>
-      <button onclick="nextStep('step3')">Movie date 🎬</button>
-      <button onclick="nextStep('step3')">
-        A room with you & me, balloons everywhere,  
-        “I love you karishma” written all around 🎈❤️
-      </button>
-    </div>
+<div class="card hidden" id="mainCard">
+  <h1>Happy Rose Day</h1>
+  <p>
+    <span id="typingText" class="typing"></span>
+  </p>
+  <button onclick="showSecret()">One more thing 🌸</button>
 
-    <!-- STEP 3 -->
-    <div id="step3" class="hidden">
-      <h1>What would you like to wear? ✨</h1>
-      <button onclick="nextStep('step4')">Your favourite outfit 💃</button>
-      <button onclick="nextStep('step4')">
-        Something elegant —  
-        a beautiful dress, soft colours, and that smile I love 😍
-      </button>
-    </div>
+  <p class="hidden" id="secretText">
+    Shalini,  
+    this rose isn’t perfect.  
+    It’s just honest.  
+    Like what I feel for you.
+  </p>
+</div>
 
-    <!-- FINAL -->
-    <div id="step4" class="hidden">
-      <h1 class="final">
-        I love you baby ❤️  
-        <br><br>
-        I am so lucky that you chose me.  
-        <br><br>
-        This Valentine is special…  
-        because it’s *us*. 💕
-      </h1>
-    </div>
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_4b5e6b6c4a.mp3" type="audio/mpeg">
+</audio>
 
-  </div>
+<script>
+const nameText = "Shalini...";
+let index = 0;
 
-  <script>
-    function nextStep(stepId) {
-      document.querySelectorAll('.card > div').forEach(div => {
-        div.classList.add('hidden');
-      });
-      document.getElementById(stepId).classList.remove('hidden');
-    }
-  </script>
+function unlock() {
+  const input = document.getElementById("password").value.trim().toLowerCase();
+  if (input === "shalini") {
+    document.getElementById("lockScreen").classList.add("hidden");
+    document.getElementById("mainCard").classList.remove("hidden");
+    document.getElementById("bgMusic").play();
+    typeEffect();
+    createRoses();
+  } else {
+    alert("Only Shalini can unlock this 🌹");
+  }
+}
+
+function typeEffect() {
+  if (index < nameText.length) {
+    document.getElementById("typingText").innerHTML += nameText.charAt(index);
+    index++;
+    setTimeout(typeEffect, 150);
+  }
+}
+
+function showSecret() {
+  document.getElementById("secretText").classList.remove("hidden");
+}
+
+function createRoses() {
+  for (let i = 0; i < 30; i++) {
+    const rose = document.createElement("div");
+    rose.className = "rose";
+    rose.innerText = "🌹";
+    rose.style.left = Math.random() * 100 + "vw";
+    rose.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    document.body.appendChild(rose);
+    setTimeout(() => rose.remove(), 6000);
+  }
+}
+</script>
+
 </body>
 </html>
+    
+    
+  
