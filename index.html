@@ -2,165 +2,216 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Rose Day Shalini 🌹</title>
+<title>Propose Day ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:radial-gradient(circle at top,#1b2735,#090a0f);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-align:center;
 }
 
-.card {
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 35px;
-  width: 380px;
-  text-align: center;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:30px;
+  border-radius:18px;
+  max-width:420px;
+  width:90%;
+  box-shadow:0 30px 60px rgba(0,0,0,0.6);
 }
 
-h1 {
-  color: #9b003f;
-  margin-bottom: 10px;
+h1{font-size:24px;margin-bottom:15px;}
+p{font-size:16px;line-height:1.5;opacity:.9;}
+
+button{
+  margin-top:20px;
+  padding:12px 22px;
+  border:none;
+  border-radius:999px;
+  background:#ff4b6e;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
 }
 
-p {
-  color: #4a0026;
-  font-size: 17px;
-  line-height: 1.6;
+button:hover{background:#ff2f5d;}
+
+.hidden{display:none;}
+
+.big{font-size:22px;}
+
+.heart{
+  font-size:28px;
+  animation:pulse 1.2s infinite;
 }
 
-input {
-  margin-top: 15px;
-  padding: 10px;
-  width: 80%;
-  border-radius: 20px;
-  border: none;
-  outline: none;
-  text-align: center;
-}
-
-button {
-  margin-top: 15px;
-  padding: 10px 22px;
-  border-radius: 25px;
-  border: none;
-  background: #9b003f;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #7a0032;
-}
-
-.hidden {
-  display: none;
-}
-
-.rose {
-  position: absolute;
-  font-size: 24px;
-  animation: float 6s linear infinite;
-}
-
-@keyframes float {
-  from { transform: translateY(100vh) rotate(0deg); }
-  to { transform: translateY(-10vh) rotate(360deg); }
-}
-
-.typing {
-  border-right: 2px solid #7a0032;
-  display: inline;
-  padding-right: 4px;
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="card" id="lockScreen">
-  <h1>🌹 For Shalini 🌹</h1>
-  <p>
-    This page opens only for one person.  
-    The one whose name makes everything softer.
-  </p>
-  <input type="text" id="password" placeholder="Enter your name">
-  <br>
-  <button onclick="unlock()">Unlock 💌</button>
-</div>
-
-<div class="card hidden" id="mainCard">
-  <h1>Happy Rose Day</h1>
-  <p>
-    <span id="typingText" class="typing"></span>
-  </p>
-  <button onclick="showSecret()">One more thing 🌸</button>
-
-  <p class="hidden" id="secretText">
-    Shalini,  
-    this rose isn’t perfect.  
-    It’s just honest.  
-    Like what I feel for you.
-  </p>
-</div>
-
-<audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_4b5e6b6c4a.mp3" type="audio/mpeg">
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
 </audio>
 
+<div class="card">
+
+<!-- DATE LOCK -->
+<div id="locked">
+  <h1>⏳ Not Yet</h1>
+  <p>Some moments wait for the right day.</p>
+</div>
+
+<!-- START -->
+<div id="start" class="hidden">
+  <h1>🌙 Hey</h1>
+  <p>Turn the volume up.</p>
+  <button onclick="start()">Begin</button>
+</div>
+
+<!-- NAME TYPE -->
+<div id="nameScreen" class="hidden">
+  <h1 id="typedName"></h1>
+</div>
+
+<!-- SECRET -->
+<div id="unlock" class="hidden">
+  <h1>🔐 Only You Can Unlock This</h1>
+  <p>Enter the one word only we understand</p>
+  <input id="secretInput" placeholder="Type here…" style="padding:12px;border-radius:10px;border:none;width:100%;">
+  <button onclick="checkSecret()">Unlock</button>
+</div>
+
+<!-- STEP 1 -->
+<div id="step1" class="hidden">
+  <h1>Hey Shalini ❤️</h1>
+  <p>I made this just for you.</p>
+  <button onclick="next(2)">Start</button>
+</div>
+
+<!-- STEP 2 -->
+<div id="step2" class="hidden">
+  <h1>Small Question 🤍</h1>
+  <p>Do you believe some people enter our life for a reason?</p>
+  <button onclick="next(3)">Yes…</button>
+</div>
+
+<!-- STEP 3 -->
+<div id="step3" class="hidden">
+  <h1>Because…</h1>
+  <p>
+    From the moment you came into my life,<br>
+    things felt lighter,<br>
+    smiles felt easier,<br>
+    and days felt warmer.
+  </p>
+  <button onclick="next(4)">Go on…</button>
+</div>
+
+<!-- STEP 4 -->
+<div id="step4" class="hidden">
+  <h1 class="big">So today…</h1>
+  <p>I don’t want a perfect line.<br>I just want something real.</p>
+  <p class="heart">❤️</p>
+  <button onclick="next(5)">Tell me</button>
+</div>
+
+<!-- STEP 5 -->
+<div id="step5" class="hidden">
+  <h1 class="big">Shalini 💖</h1>
+  <p>
+    Will you be my girlfriend<br>
+    and choose me<br>
+    not just today,<br>
+    but every day we build together?
+  </p>
+  <button onclick="yes()">YES ❤️</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="hidden">
+  <h1>Best decision ever 🥹❤️</h1>
+  <p>
+    I promise laughs,<br>
+    late talks,<br>
+    stupid jokes,<br>
+    and a hand you’ll never have to look for.
+  </p>
+  <p class="big">I love you.</p>
+</div>
+
+</div>
+
 <script>
-const nameText = "Shalini...";
-let index = 0;
+const HER_NAME="Shalini";
+const SECRET_WORD="forever";
+const PROPOSE_DAY="2026-02-08";
 
-function unlock() {
-  const input = document.getElementById("password").value.trim().toLowerCase();
-  if (input === "shalini") {
-    document.getElementById("lockScreen").classList.add("hidden");
-    document.getElementById("mainCard").classList.remove("hidden");
-    document.getElementById("bgMusic").play();
-    typeEffect();
-    createRoses();
-  } else {
-    alert("Only Shalini can unlock this 🌹");
+const today=new Date().toISOString().slice(0,10);
+if(today===PROPOSE_DAY){
+  document.getElementById("locked").classList.add("hidden");
+  document.getElementById("start").classList.remove("hidden");
+}
+
+function start(){
+  document.getElementById("music").play();
+  document.getElementById("start").classList.add("hidden");
+  typeName();
+}
+
+function typeName(){
+  let i=0;
+  const el=document.getElementById("typedName");
+  document.getElementById("nameScreen").classList.remove("hidden");
+  const t=setInterval(()=>{
+    el.textContent+=HER_NAME[i];
+    i++;
+    if(i===HER_NAME.length){
+      clearInterval(t);
+      setTimeout(()=>{
+        document.getElementById("nameScreen").classList.add("hidden");
+        document.getElementById("unlock").classList.remove("hidden");
+      },1200);
+    }
+  },200);
+}
+
+function checkSecret(){
+  const v=document.getElementById("secretInput").value.toLowerCase();
+  if(v===SECRET_WORD){
+    document.getElementById("unlock").classList.add("hidden");
+    document.getElementById("step1").classList.remove("hidden");
+  }else{
+    alert("You know it… try again 💭");
   }
 }
 
-function typeEffect() {
-  if (index < nameText.length) {
-    document.getElementById("typingText").innerHTML += nameText.charAt(index);
-    index++;
-    setTimeout(typeEffect, 150);
+function next(n){
+  for(let i=1;i<=5;i++){
+    let el=document.getElementById("step"+i);
+    if(el) el.classList.add("hidden");
   }
+  document.getElementById("step"+n).classList.remove("hidden");
 }
 
-function showSecret() {
-  document.getElementById("secretText").classList.remove("hidden");
-}
-
-function createRoses() {
-  for (let i = 0; i < 30; i++) {
-    const rose = document.createElement("div");
-    rose.className = "rose";
-    rose.innerText = "🌹";
-    rose.style.left = Math.random() * 100 + "vw";
-    rose.style.animationDuration = (Math.random() * 3 + 4) + "s";
-    document.body.appendChild(rose);
-    setTimeout(() => rose.remove(), 6000);
-  }
+function yes(){
+  document.getElementById("step5").classList.add("hidden");
+  document.getElementById("final").classList.remove("hidden");
 }
 </script>
 
 </body>
 </html>
-    
-    
   
