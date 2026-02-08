@@ -78,7 +78,7 @@ button:hover{background:#ff2f5d;}
 <div id="start" class="hidden">
   <h1>🌙 Hey</h1>
   <p>Turn the volume up.</p>
-  <button onclick="start()">Begin</button>
+  <button onclick="startExperience()">Start</button>
 </div>
 
 <!-- NAME TYPE -->
@@ -158,13 +158,20 @@ button:hover{background:#ff2f5d;}
 const HER_NAME="Shalini";
 const SECRET_WORD="forever";
 const PROPOSE_DAY="2026-02-08";
+  }
+</script>
 
 const today=new Date().toISOString().slice(0,10);
 if(today===PROPOSE_DAY){
   document.getElementById("locked").classList.add("hidden");
   document.getElementById("start").classList.remove("hidden");
 }
-
+<script>
+function startExperience(){
+  const music = document.getElementById("bgMusic");
+  music.play();
+  next(2);
+  
 function start(){
   document.getElementById("music").play();
   document.getElementById("start").classList.add("hidden");
