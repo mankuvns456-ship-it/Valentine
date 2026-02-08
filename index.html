@@ -8,7 +8,7 @@
 <style>
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
   background:radial-gradient(circle at top,#1b2735,#090a0f);
   min-height:100vh;
   display:flex;
@@ -21,204 +21,82 @@ body{
 .card{
   background:rgba(255,255,255,0.08);
   padding:30px;
-  border-radius:18px;
+  border-radius:20px;
   max-width:420px;
   width:90%;
-  box-shadow:0 30px 60px rgba(0,0,0,0.6);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
 }
-
-h1{font-size:24px;margin-bottom:15px;}
-p{font-size:16px;line-height:1.5;opacity:.9;}
-
-button{
-  margin-top:20px;
-  padding:12px 22px;
-  border:none;
-  border-radius:999px;
-  background:#ff4b6e;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-
-button:hover{background:#ff2f5d;}
 
 .hidden{display:none;}
 
-.big{font-size:22px;}
-
-.heart{
-  font-size:28px;
-  animation:pulse 1.2s infinite;
+button{
+  margin-top:20px;
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d6d;
+  color:white;
+  font-size:16px;
 }
 
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.2);}
-  100%{transform:scale(1);}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  margin-top:15px;
+  font-size:16px;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" loop>
+<div class="card">
+
+  <div id="locked">
+    <h1>🔐 Locked</h1>
+    <p>Ek secret word likho</p>
+    <input id="secretInput">
+    <button onclick="unlock()">Unlock</button>
+  </div>
+
+  <div id="start" class="hidden">
+    <h1>🎵 One tap first</h1>
+    <p>Music start karne ke liye tap karo</p>
+    <button onclick="enableMusic()">Enable Music</button>
+  </div>
+
+  <div id="proposal" class="hidden">
+    <h1>Shalini ❤️</h1>
+    <p>Will you be mine?</p>
+  </div>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" controls>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card">
-
-<!-- DATE LOCK -->
-<div id="locked">
-  <h1>⏳ Not Yet</h1>
-  <p>Some moments wait for the right day.</p>
-</div>
-
-<!-- START -->
-<div id="start" class="hidden">
-  <h1>🌙 Hey</h1>
-  <p>Turn the volume up.</p>
-  <button onclick="startExperience()">Start</button>
-</div>
-
-<!-- NAME TYPE -->
-<div id="nameScreen" class="hidden">
-  <h1 id="typedName"></h1>
-</div>
-
-<!-- SECRET -->
-<div id="unlock" class="hidden">
-  <h1>🔐 Only You Can Unlock This</h1>
-  <p>Enter the one word only we understand</p>
-  <input id="secretInput" placeholder="Type here…" style="padding:12px;border-radius:10px;border:none;width:100%;">
-  <button onclick="checkSecret()">Unlock</button>
-</div>
-
-<!-- STEP 1 -->
-<div id="step1" class="hidden">
-  <h1>Hey Shalini ❤️</h1>
-  <p>I made this just for you.</p>
-  <button onclick="next(2)">Start</button>
-</div>
-
-<!-- STEP 2 -->
-<div id="step2" class="hidden">
-  <h1>Small Question 🤍</h1>
-  <p>Do you believe some people enter our life for a reason?</p>
-  <button onclick="next(3)">Yes…</button>
-</div>
-
-<!-- STEP 3 -->
-<div id="step3" class="hidden">
-  <h1>Because…</h1>
-  <p>
-    From the moment you came into my life,<br>
-    things felt lighter,<br>
-    smiles felt easier,<br>
-    and days felt warmer.
-  </p>
-  <button onclick="next(4)">Go on…</button>
-</div>
-
-<!-- STEP 4 -->
-<div id="step4" class="hidden">
-  <h1 class="big">So today…</h1>
-  <p>I don’t want a perfect line.<br>I just want something real.</p>
-  <p class="heart">❤️</p>
-  <button onclick="next(5)">Tell me</button>
-</div>
-
-<!-- STEP 5 -->
-<div id="step5" class="hidden">
-  <h1 class="big">Shalini 💖</h1>
-  <p>
-    Will you be my girlfriend<br>
-    and choose me<br>
-    not just today,<br>
-    but every day we build together?
-  </p>
-  <button onclick="yes()">YES ❤️</button>
-</div>
-
-<!-- FINAL -->
-<div id="final" class="hidden">
-  <h1>Best decision ever 🥹❤️</h1>
-  <p>
-    I promise laughs,<br>
-    late talks,<br>
-    stupid jokes,<br>
-    and a hand you’ll never have to look for.
-  </p>
-  <p class="big">I love you.</p>
-</div>
-
-</div>
-
 <script>
-const HER_NAME="Shalini";
-const SECRET_WORD="forever";
-const PROPOSE_DAY="2026-02-08";
+const SECRET_WORD = "forever";
+
+function unlock(){
+  if(document.getElementById("secretInput").value.toLowerCase() === SECRET_WORD){
+    document.getElementById("locked").classList.add("hidden");
+    document.getElementById("start").classList.remove("hidden");
   }
-</script>
-
-const today=new Date().toISOString().slice(0,10);
-if(today===PROPOSE_DAY){
-  document.getElementById("locked").classList.add("hidden");
-  document.getElementById("start").classList.remove("hidden");
 }
-<script>
-function startExperience(){
+
+function enableMusic(){
   const music = document.getElementById("bgMusic");
-  music.play();
-  next(2);
-  
-function start(){
-  document.getElementById("music").play();
+  music.volume = 0.7;
+  music.play(); // this WILL work now
   document.getElementById("start").classList.add("hidden");
-  typeName();
-}
-
-function typeName(){
-  let i=0;
-  const el=document.getElementById("typedName");
-  document.getElementById("nameScreen").classList.remove("hidden");
-  const t=setInterval(()=>{
-    el.textContent+=HER_NAME[i];
-    i++;
-    if(i===HER_NAME.length){
-      clearInterval(t);
-      setTimeout(()=>{
-        document.getElementById("nameScreen").classList.add("hidden");
-        document.getElementById("unlock").classList.remove("hidden");
-      },1200);
-    }
-  },200);
-}
-
-function checkSecret(){
-  const v=document.getElementById("secretInput").value.toLowerCase();
-  if(v===SECRET_WORD){
-    document.getElementById("unlock").classList.add("hidden");
-    document.getElementById("step1").classList.remove("hidden");
-  }else{
-    alert("You know it… try again 💭");
-  }
-}
-
-function next(n){
-  for(let i=1;i<=5;i++){
-    let el=document.getElementById("step"+i);
-    if(el) el.classList.add("hidden");
-  }
-  document.getElementById("step"+n).classList.remove("hidden");
-}
-
-function yes(){
-  document.getElementById("step5").classList.add("hidden");
-  document.getElementById("final").classList.remove("hidden");
+  document.getElementById("proposal").classList.remove("hidden");
 }
 </script>
 
 </body>
 </html>
-  
