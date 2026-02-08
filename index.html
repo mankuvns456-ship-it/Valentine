@@ -16,28 +16,24 @@ body{
   justify-content:center;
   color:#fff;
   text-align:center;
+  overflow:hidden;
 }
 
 .card{
   background:rgba(255,255,255,0.08);
-  padding:30px;
+  padding:32px;
   border-radius:20px;
   max-width:420px;
   width:90%;
   box-shadow:0 30px 60px rgba(0,0,0,.6);
+  position:relative;
+  z-index:2;
 }
 
 .hidden{display:none;}
 
-button{
-  margin-top:20px;
-  padding:12px 26px;
-  border:none;
-  border-radius:30px;
-  background:#ff4d6d;
-  color:white;
-  font-size:16px;
-}
+h1{font-size:24px;margin-bottom:15px;}
+p{font-size:16px;line-height:1.6;opacity:.9;}
 
 input{
   width:100%;
@@ -46,6 +42,32 @@ input{
   border:none;
   margin-top:15px;
   font-size:16px;
+  outline:none;
+}
+
+button{
+  margin-top:22px;
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  background:#ff4d6d;
+  color:#fff;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:18px;
+  animation:floatUp 6s linear infinite;
+  opacity:.8;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0) scale(1);opacity:.8}
+  to{transform:translateY(-120vh) scale(1.4);opacity:0}
 }
 </style>
 </head>
@@ -54,47 +76,116 @@ input{
 
 <div class="card">
 
+  <!-- LOCK -->
   <div id="locked">
     <h1>🔐 Locked</h1>
-    <p>Ek secret word likho</p>
-    <input id="secretInput">
+    <p>Ek word jo sirf hum jaante hain</p>
+    <input id="secretInput" placeholder="Type here…" />
     <button onclick="unlock()">Unlock</button>
   </div>
 
+  <!-- START -->
   <div id="start" class="hidden">
-    <h1>🎵 One tap first</h1>
-    <p>Music start karne ke liye tap karo</p>
-    <button onclick="enableMusic()">Enable Music</button>
+    <h1>🌙 Propose Day</h1>
+    <p>Ready ho? Tap karo</p>
+    <button onclick="startExperience()">Start</button>
   </div>
 
+  <!-- PROPOSAL -->
   <div id="proposal" class="hidden">
-    <h1>Shalini ❤️</h1>
-    <p>Will you be mine?</p>
+    <h1 id="typedName"></h1>
+    <p>
+      Jab se tum meri life me aayi ho,<br>
+      cheezein thodi zyada khoobsurat ho gayi hain.
+    </p>
+    <p>Will you be mine? ❤️</p>
+    <button onclick="sayYes()">YES 💖</button>
+  </div>
+
+  <!-- FINAL -->
+  <div id="final" class="hidden">
+    <h1>🥹❤️</h1>
+    <p>
+      I love you baby.<br>
+      I am so lucky that you chose me.
+    </p>
   </div>
 
 </div>
 
-<!-- MUSIC -->
-<audio id="bgMusic" controls>
+<!-- 🎵 MUSIC (same folder me music.mp3 honi chahiye) -->
+<audio id="bgMusic" preload="auto" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+// ===== SETTINGS =====
+const HER_NAME = "Shalini";
 const SECRET_WORD = "forever";
+const PROPOSE_DAY = "2026-02-08";
+// ====================
 
+// Date Check
+const today = new Date().toISOString().slice(0,10);
+
+if(today !== PROPOSE_DAY){
+  document.getElementById("locked").innerHTML =
+    "<h1>⏳ Not yet</h1><p>Propose Day pe hi khulega ❤️</p>";
+}
+
+// Unlock
 function unlock(){
-  if(document.getElementById("secretInput").value.toLowerCase() === SECRET_WORD){
+  const v = document.getElementById("secretInput").value.trim().toLowerCase();
+  if(v === SECRET_WORD){
     document.getElementById("locked").classList.add("hidden");
     document.getElementById("start").classList.remove("hidden");
+  }else{
+    alert("Almost… dobara try karo 💭");
   }
 }
 
-function enableMusic(){
-  const music = document.getElementById("bgMusic");
-  music.volume = 0.7;
-  music.play(); // this WILL work now
+// Start Experience
+function startExperience(){
   document.getElementById("start").classList.add("hidden");
   document.getElementById("proposal").classList.remove("hidden");
+
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.6;
+  music.play().catch(()=>{});
+
+  typeName();
+  hearts();
+}
+
+// Typewriter Effect
+function typeName(){
+  const el = document.getElementById("typedName");
+  let i = 0;
+  el.innerText = "";
+  const interval = setInterval(()=>{
+    el.innerText += HER_NAME[i];
+    i++;
+    if(i === HER_NAME.length) clearInterval(interval);
+  }, 150);
+}
+
+// YES
+function sayYes(){
+  document.getElementById("proposal").classList.add("hidden");
+  document.getElementById("final").classList.remove("hidden");
+}
+
+// Floating Hearts
+function hearts(){
+  setInterval(()=>{
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "❤️";
+    h.style.left = Math.random()*100 + "vw";
+    h.style.fontSize = 14 + Math.random()*20 + "px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  }, 400);
 }
 </script>
 
