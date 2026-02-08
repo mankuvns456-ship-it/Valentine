@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Propose Day ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  background:#0b0f1a;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+}
+.hidden{display:none}
+.card{
+  background:rgba(255,255,255,.08);
+  padding:30px;
+  border-radius:20px;
+  max-width:420px;
+  width:90%;
+  text-align:center;
+}
+button{
+  margin-top:20px;
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d6d;
+  color:#fff;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div id="locked">
+    <h2>🔐 Locked</h2>
+    <input id="secretInput" placeholder="Secret word">
+    <button onclick="unlock()">Unlock</button>
+  </div>
+
+  <div id="start" class="hidden">
+    <h2>Propose Day 🌙</h2>
+    <button onclick="startExperience()">Start</button>
+  </div>
+
+  <div id="proposal" class="hidden">
+    <h2 id="typedName"></h2>
+    <p>Will you be mine? ❤️</p>
+    <button onclick="sayYes()">YES</button>
+  </div>
+
+  <div id="final" class="hidden">
+    <h2>🥹❤️</h2>
+    <p>I love you</p>
+  </div>
+</div>
+
+<audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
+
+<script>
+const HER_NAME = "Shalini";
+const SECRET_WORD = "forever";
+
+function unlock(){
+  if(document.getElementById("secretInput").value.toLowerCase() === SECRET_WORD){
+    document.getElementById("locked").classList.add("hidden");
+    document.getElementById("start").classList.remove("hidden");
+  }
+}
+
+function startExperience(){
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("proposal").classList.remove("hidden");
+  document.getElementById("bgMusic").play();
+  typeName();
+}
+
+function typeName(){
+  let i=0;
+  const el=document.getElementById("typedName");
+  const t=setInterval(()=>{
+    el.innerText+=HER_NAME[i++];
+    if(i===HER_NAME.length) clearInterval(t);
+  },150);
+}
+
+function sayYes(){
+  document.getElementById("proposal").classList.add("hidden");
+  document.getElementById("final").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
