@@ -2,160 +2,189 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Rose Day Shalini 🌹</title>
+<title>Propose Day ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  background:radial-gradient(circle at top,#1b2735,#090a0f);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-align:center;
+  overflow:hidden;
 }
 
-.card {
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 35px;
-  width: 380px;
-  text-align: center;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:32px;
+  border-radius:20px;
+  max-width:420px;
+  width:90%;
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
+  position:relative;
+  z-index:2;
 }
 
-h1 {
-  color: #9b003f;
-  margin-bottom: 10px;
+.hidden{display:none;}
+
+h1{font-size:24px;margin-bottom:15px;}
+p{font-size:16px;line-height:1.6;opacity:.9;}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  margin-top:15px;
+  font-size:16px;
+  outline:none;
 }
 
-p {
-  color: #4a0026;
-  font-size: 17px;
-  line-height: 1.6;
+button{
+  margin-top:22px;
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  background:#ff4d6d;
+  color:#fff;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:18px;
+  animation:floatUp 6s linear infinite;
+  opacity:.8;
 }
 
-input {
-  margin-top: 15px;
-  padding: 10px;
-  width: 80%;
-  border-radius: 20px;
-  border: none;
-  outline: none;
-  text-align: center;
-}
-
-button {
-  margin-top: 15px;
-  padding: 10px 22px;
-  border-radius: 25px;
-  border: none;
-  background: #9b003f;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #7a0032;
-}
-
-.hidden {
-  display: none;
-}
-
-.rose {
-  position: absolute;
-  font-size: 24px;
-  animation: float 6s linear infinite;
-}
-
-@keyframes float {
-  from { transform: translateY(100vh) rotate(0deg); }
-  to { transform: translateY(-10vh) rotate(360deg); }
-}
-
-.typing {
-  border-right: 2px solid #7a0032;
-  display: inline;
-  padding-right: 4px;
+@keyframes floatUp{
+  from{transform:translateY(0) scale(1);opacity:.8}
+  to{transform:translateY(-120vh) scale(1.4);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<div class="card" id="lockScreen">
-  <h1>🌹 For Shalini 🌹</h1>
-  <p>
-    This page opens only for one person.  
-    The one whose name makes everything softer.
-  </p>
-  <input type="text" id="password" placeholder="Enter your name">
-  <br>
-  <button onclick="unlock()">Unlock 💌</button>
+<div class="card">
+
+  <!-- LOCK -->
+  <div id="locked">
+    <h1>🔐 Locked</h1>
+    <p>Ek word jo sirf hum jaante hain</p>
+    <input id="secretInput" placeholder="Type here…" />
+    <button onclick="unlock()">Unlock</button>
+  </div>
+
+  <!-- START -->
+  <div id="start" class="hidden">
+    <h1>🌙 Propose Day</h1>
+    <p>Ready ho? Tap karo</p>
+    <button onclick="startExperience()">Start</button>
+  </div>
+
+  <!-- PROPOSAL -->
+  <div id="proposal" class="hidden">
+    <h1 id="typedName"></h1>
+    <p>
+      Jab se tum meri life me aayi ho,<br>
+      cheezein thodi zyada khoobsurat ho gayi hain.
+    </p>
+    <p>Will you be mine? ❤️</p>
+    <button onclick="sayYes()">YES 💖</button>
+  </div>
+
+  <!-- FINAL -->
+  <div id="final" class="hidden">
+    <h1>🥹❤️</h1>
+    <p>
+      I love you baby.<br>
+      I am so lucky that you chose me.
+    </p>
+  </div>
+
 </div>
 
-<div class="card hidden" id="mainCard">
-  <h1>Happy Rose Day</h1>
-  <p>
-    <span id="typingText" class="typing"></span>
-  </p>
-  <button onclick="showSecret()">One more thing 🌸</button>
-
-  <p class="hidden" id="secretText">
-    Shalini,  
-    this rose isn’t perfect.  
-    It’s just honest.  
-    Like what I feel for you.
-  </p>
-</div>
-
-<audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_4b5e6b6c4a.mp3" type="audio/mpeg">
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const nameText = "Shalini...";
-let index = 0;
+// ===== SETTINGS =====
+const HER_NAME = "Shalini";
+const SECRET_WORD = "forever";
+const PROPOSE_DAY = "2026-02-08";
+// ====================
 
-function unlock() {
-  const input = document.getElementById("password").value.trim().toLowerCase();
-  if (input === "shalini") {
-    document.getElementById("lockScreen").classList.add("hidden");
-    document.getElementById("mainCard").classList.remove("hidden");
-    document.getElementById("bgMusic").play();
-    typeEffect();
-    createRoses();
-  } else {
-    alert("Only Shalini can unlock this 🌹");
+// Date Lock
+const today = new Date().toISOString().slice(0,10);
+if(today !== PROPOSE_DAY){
+  document.getElementById("locked").innerHTML =
+    "<h1>⏳ Not yet</h1><p>Propose Day pe hi khulega ❤️</p>";
+}
+
+// Unlock
+function unlock(){
+  const v = document.getElementById("secretInput").value.trim().toLowerCase();
+  if(v === SECRET_WORD){
+    document.getElementById("locked").classList.add("hidden");
+    document.getElementById("start").classList.remove("hidden");
+  }else{
+    alert("Almost… dobara try karo 💭");
   }
 }
 
-function typeEffect() {
-  if (index < nameText.length) {
-    document.getElementById("typingText").innerHTML += nameText.charAt(index);
-    index++;
-    setTimeout(typeEffect, 150);
-  }
+// Start Experience
+function startExperience(){
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("proposal").classList.remove("hidden");
+
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.6;
+  music.play().catch(()=>{});
+
+  typeName();
+  hearts();
 }
 
-function showSecret() {
-  document.getElementById("secretText").classList.remove("hidden");
+// Typewriter Name
+function typeName(){
+  const el = document.getElementById("typedName");
+  let i = 0;
+  el.innerText = "";
+  const interval = setInterval(()=>{
+    el.innerText += HER_NAME[i];
+    i++;
+    if(i === HER_NAME.length) clearInterval(interval);
+  }, 150);
 }
 
-function createRoses() {
-  for (let i = 0; i < 30; i++) {
-    const rose = document.createElement("div");
-    rose.className = "rose";
-    rose.innerText = "🌹";
-    rose.style.left = Math.random() * 100 + "vw";
-    rose.style.animationDuration = (Math.random() * 3 + 4) + "s";
-    document.body.appendChild(rose);
-    setTimeout(() => rose.remove(), 6000);
-  }
+// YES
+function sayYes(){
+  document.getElementById("proposal").classList.add("hidden");
+  document.getElementById("final").classList.remove("hidden");
+}
+
+// Floating Hearts
+function hearts(){
+  setInterval(()=>{
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "❤️";
+    h.style.left = Math.random()*100 + "vw";
+    h.style.fontSize = 14 + Math.random()*20 + "px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  }, 400);
 }
 </script>
 
