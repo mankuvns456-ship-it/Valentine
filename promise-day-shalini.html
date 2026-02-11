@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Promise Day - For Shalini 🤍</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(to bottom,#f8f9fa,#e3f2fd);
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+.card{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  width:420px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+}
+
+h1{
+  color:#1565c0;
+  margin-bottom:10px;
+}
+
+p{
+  color:#333;
+  line-height:1.6;
+  font-size:17px;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:#1565c0;
+  color:white;
+  cursor:pointer;
+  font-size:15px;
+}
+
+button:hover{
+  background:#0d47a1;
+}
+
+.hidden{
+  display:none;
+}
+
+.typing{
+  border-right:2px solid #1565c0;
+  display:inline;
+  padding-right:4px;
+}
+
+.heart{
+  position:absolute;
+  color:#e91e63;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="mainCard">
+  <h1>Promise Day 🤍</h1>
+  <p>
+    <span id="typingText" class="typing"></span>
+  </p>
+  <button onclick="showPromise()">Read My Promise</button>
+
+  <p class="hidden" id="finalPromise">
+    Shalini,  
+    I promise to never love you loudly and forget you quietly.  
+    I promise to stay — not just when things are easy,  
+    but when they test us.  
+    I promise honesty over ego,  
+    effort over excuses,  
+    and you over my pride.  
+    <br><br>
+    And no matter how life changes…  
+    I will always choose you with the same calm certainty.
+  </p>
+</div>
+
+<script>
+const message = "Shalini… today I don’t promise perfection. I promise presence.";
+let i = 0;
+
+function typeEffect(){
+  if(i < message.length){
+    document.getElementById("typingText").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeEffect,80);
+  }
+}
+
+function showPromise(){
+  document.getElementById("finalPromise").classList.remove("hidden");
+  createHearts();
+}
+
+function createHearts(){
+  for(let j=0;j<25;j++){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerText="🤍";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*3+4)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  }
+}
+
+typeEffect();
+</script>
+
+</body>
+</html>
